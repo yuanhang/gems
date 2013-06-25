@@ -15,5 +15,8 @@ FileUtils.copy("mydoc.xml","mydoc_copy.xml")
 FileUtils.copy("mydoc.xml","#{dir_name}/mydoc_copy.xml")
 FileUtils.copy("#{samples_path}/62479176.PDF.txt",dir_name)
 
+# create a directory and all its parent directories
+FileUtils.mkdir_p 'test1/test2/test3'
+
 # copy directory, and create path if the target directory doesn't exist 
 FileUtils.cp_r(dir_name, "#{dir_name_utils}/#{dir_name}")
