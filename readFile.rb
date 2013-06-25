@@ -26,3 +26,6 @@ puts root.elements["section"].attributes["name"]
 puts root.elements[1].attributes["name"] 
 # -> health (returns the FIRST child element) 
 
+root.elements.each("section/item") do |element|
+  puts element.elements["name"].text
+end
