@@ -1,13 +1,35 @@
-file 'main.o' => ["main.c", "greet.h"] do
-  sh "gcc -c -o main.o main.c"
-end
+require 'rake/clean'
 
-file 'greet.o' => ["greet.c"] do
-  sh "gcc -c -o greet.o greet.c"
-end
+#file 'main.o' => ["main.c", "greet.h"] do
+  #sh "gcc -c -o main.o main.c"
+#end
 
-file 'hello' => ["main.o", "greet.o"] do
-  sh "gcc -o hello main.o greet.o"
-end
+#file 'greet.o' => ["greet.c"] do
+  #sh "gcc -c -o greet.o greet.c"
+#end
+
+#file 'hello' => ["main.o", "greet.o"] do
+  #sh "gcc -o hello main.o greet.o"
+#end
 
 task :default => ["hello"]
+
+SRC = FileList['*.c']
+OBJ = SRC.ext('o')
+# must use include
+CLEAN.include('*.o')
+CLOBBER.include('hello')
+
+rule '.o' => '.c' do |t|
+  sh "gcc -c -o #{t.name} #{t.source}"
+end
+
+file "hello" => OBJ do
+  sh "gcc -o hello #{OBJ}"
+end
+
+# it works fine without this, but lost dependency on greet.h
+# this is multiple definition of a task ('main.o', 'greet.o')
+file 'main.o' => ['main.c', 'greet.h']
+file 'greet.o' => ['greet.c']
+
