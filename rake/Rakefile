@@ -9,3 +9,5 @@ end
 file 'hello' => ["main.o", "greet.o"] do
   sh "gcc -o hello main.o greet.o"
 end
+
+task :default => ["hello"]
